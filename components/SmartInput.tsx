@@ -12,7 +12,7 @@ const suggestions = [
 ];
 
 const categoryColors: Record<string, string> = {
-  'État civil': 'bg-blue-100 text-blue-700',
+  'État civil': 'bg-emerald-100 text-emerald-700',
   'Scolaire': 'bg-green-100 text-green-700',
   'Réservation': 'bg-purple-100 text-purple-700',
   'Signalement': 'bg-red-100 text-red-700',
@@ -55,7 +55,7 @@ export default function SmartInput() {
   return (
     <div className="w-full max-w-2xl mx-auto">
       <div className="relative">
-        <div className="flex items-center bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+        <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 overflow-hidden">
           <div className="flex-1 px-5 py-4">
             <textarea
               value={value}
@@ -63,7 +63,7 @@ export default function SmartInput() {
               onFocus={() => setShowSuggestions(true)}
               onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
               placeholder="Expliquez votre besoin… ex: Je voudrais inscrire mon enfant à l'école primaire"
-              className="w-full text-gray-800 placeholder-gray-400 resize-none outline-none text-base leading-relaxed bg-transparent"
+              className="w-full text-white placeholder-white/50 resize-none outline-none text-base leading-relaxed bg-transparent"
               rows={2}
               onKeyDown={e => {
                 if (e.key === 'Enter' && !e.shiftKey) {
@@ -76,7 +76,7 @@ export default function SmartInput() {
           <div className="pr-3">
             <button
               onClick={handleSubmit}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-xl font-medium text-sm transition-all active:scale-95"
+              className="bg-emerald-500 hover:bg-emerald-400 text-white px-5 py-3 rounded-xl font-medium text-sm transition-all active:scale-95 shadow-lg"
             >
               Envoyer →
             </button>
@@ -90,7 +90,7 @@ export default function SmartInput() {
               <button
                 key={i}
                 onClick={() => { handleChange(s); setShowSuggestions(false); }}
-                className="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors"
+                className="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg transition-colors"
               >
                 {s}
               </button>
@@ -100,36 +100,36 @@ export default function SmartInput() {
       </div>
 
       {analyzing && (
-        <div className="mt-3 flex items-center gap-2 text-sm text-gray-500 px-2">
+        <div className="mt-3 flex items-center gap-2 text-sm text-white/70 px-2">
           <div className="flex gap-1">
-            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
-            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
-            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+            <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+            <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+            <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
           </div>
           <span>Analyse en cours…</span>
         </div>
       )}
 
       {intent && !analyzing && (
-        <div className="mt-3 bg-white rounded-xl border border-gray-100 p-4 shadow-sm">
+        <div className="mt-3 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 p-4 shadow-sm">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
               <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${categoryColors[intent.category]}`}>
                 {intent.category}
               </span>
-              <span className="text-xs text-gray-400">Confiance : {intent.confidence}%</span>
+              <span className="text-xs text-white/60">Confiance : {intent.confidence}%</span>
             </div>
-            <span className="text-xs text-emerald-600 font-medium">✓ Catégorie détectée</span>
+            <span className="text-xs text-emerald-400 font-medium">✓ Catégorie détectée</span>
           </div>
-          <p className="text-sm text-gray-600 mb-3">{intent.aiSummary}</p>
+          <p className="text-sm text-white/80 mb-3">{intent.aiSummary}</p>
           <div className="flex flex-wrap gap-2 mb-3">
             {intent.suggestedFields.map((f: string) => (
-              <span key={f} className="text-xs bg-gray-50 text-gray-600 px-2 py-1 rounded-md border border-gray-100">
+              <span key={f} className="text-xs bg-white/10 text-white/70 px-2 py-1 rounded-md border border-white/20">
                 {f}
               </span>
             ))}
           </div>
-          <p className="text-xs text-gray-400 italic">Synthèse automatique — validation agent requise</p>
+          <p className="text-xs text-white/40 italic">Synthèse automatique — validation agent requise</p>
         </div>
       )}
     </div>
