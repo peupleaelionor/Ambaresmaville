@@ -15,11 +15,8 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className="bg-white min-h-screen font-sans antialiased">
-        <div className="bg-emerald-800 text-emerald-100 text-center text-xs py-1.5 px-4 font-medium">
-          ⚠️ Prototype de démonstration — Conserver l&apos;identité locale, moderniser l&apos;expérience
-        </div>
         <Navigation />
-        <main>{children}</main>
+        <main className="pb-16 md:pb-0">{children}</main>
       </body>
     </html>
   );

@@ -20,7 +20,6 @@
 @layer components {
   .flash-banner {
     @apply bg-emerald-700 text-white text-sm py-2.5 px-4 font-medium;
-    animation: flash-slide 20s linear infinite;
   }
 
   .card-hover {
@@ -32,15 +31,33 @@
   }
 
   .gradient-hero {
-    background: linear-gradient(135deg, #07111F 0%, #064E3B 40%, #047857 100%);
+    background: linear-gradient(135deg, #065F46 0%, #047857 40%, #059669 100%);
   }
 
   .gradient-section {
     background: linear-gradient(135deg, #047857 0%, #0F766E 50%, #065F46 100%);
+  }
+
+  .bg-navy {
+    background-color: #07111F;
   }
 }
 
 @keyframes flash-slide {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.85; }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* Safe area padding for mobile bottom nav */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }

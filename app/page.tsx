@@ -1,11 +1,35 @@
 import Link from 'next/link';
-import SmartInput from '@/components/SmartInput';
+import Logo from '@/components/Logo';
 
 const flashInfos = [
   { type: 'urgent', icon: '🚨', label: 'Alerte', text: 'Coupure d\'eau prévue rue Jean Jaurès — 14 avril de 9h à 17h' },
   { type: 'travaux', icon: '🚧', label: 'Travaux', text: 'Réaménagement du centre-ville : phase 2 en cours' },
   { type: 'circulation', icon: '🚗', label: 'Circulation', text: 'Déviation route de Bordeaux du 15 au 22 avril' },
   { type: 'securite', icon: '🛡️', label: 'Sécurité', text: 'Vigilance météo orange — Recommandations' },
+];
+
+const propositionsCitoyennes = [
+  { icon: '📋', label: 'Infos', href: '/projets' },
+  { icon: '🎯', label: 'Services', href: '/form' },
+  { icon: '📅', label: 'Agenda', href: '/projets' },
+  { icon: '📚', label: 'Ressources', href: '/chatbot' },
+];
+
+const projetsUrbains = [
+  { title: 'Tableau de Bord Mairie', desc: 'Vue d\'ensemble des indicateurs clés de la commune', image: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?w=400&h=250&fit=crop', link: '/admin' },
+  { title: 'Suivi Des Demandes', desc: 'Suivez l\'avancement de toutes les demandes citoyennes', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=250&fit=crop', link: '/suivi' },
+  { title: 'Gestion Urbaine', desc: 'Projets d\'aménagement et développement de la ville', image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=250&fit=crop', link: '/projets' },
+];
+
+const journeySteps = [
+  { id: 'env', label: 'Envoi', active: true },
+  { id: 'enreg', label: 'Enregistré', active: true },
+  { id: 'trait', label: 'En traitement', active: true },
+  { id: 'transm', label: 'Transmis', active: false },
+  { id: 'planif', label: 'Planifié', active: false },
+  { id: 'validat', label: 'Validation', active: false },
+  { id: 'resolut', label: 'Résolution', active: false },
+  { id: 'finalis', label: 'Finalisée', active: false },
 ];
 
 const decouvrirItems = [
@@ -23,33 +47,6 @@ const participeItems = [
   { icon: '💡', title: 'Boîte à idées', desc: 'Proposez vos idées pour améliorer Ambarès', color: 'from-emerald-600 to-green-800' },
 ];
 
-const demarchesItems = [
-  { icon: '📋', title: 'Formulaire intelligent', desc: 'Décrivez votre besoin, le formulaire s\'adapte automatiquement', link: '/form', cta: 'Faire une demande' },
-  { icon: '📡', title: 'Suivi de demande', desc: 'Consultez l\'avancement de vos démarches en temps réel', link: '/suivi', cta: 'Suivre ma demande' },
-  { icon: '💬', title: 'Assistant mairie', desc: 'Posez vos questions et obtenez des réponses instantanées', link: '/chatbot', cta: 'Poser une question' },
-];
-
-const journeySteps = [
-  { num: 1, title: "L'habitant exprime son besoin", desc: "En langage naturel, sans formulaire complexe" },
-  { num: 2, title: "Le portail structure la demande", desc: "L'IA détecte l'intention et pré-remplit le formulaire adapté" },
-  { num: 3, title: "L'agent reçoit une synthèse claire", desc: "Demande catégorisée, résumée et orientée automatiquement" },
-  { num: 4, title: "Le dossier est suivi de façon transparente", desc: "Le citoyen peut consulter l'avancement en temps réel" },
-  { num: 5, title: "La mairie obtient une vision globale", desc: "Tableaux de bord et indicateurs pour les élus et managers" },
-];
-
-const qualityCards = [
-  { icon: "🎯", title: "Demandes mieux orientées", desc: "Les demandes arrivent directement au bon service, sans reroutage manuel" },
-  { icon: "✏️", title: "Moins d'erreurs de saisie", desc: "Les formulaires pré-remplis réduisent les erreurs et les allers-retours" },
-  { icon: "👁️", title: "Suivi transparent", desc: "Le citoyen est informé à chaque étape du traitement" },
-  { icon: "⏱️", title: "Temps gagné", desc: "Moins de temps passé en accueil téléphonique et en saisie manuelle" },
-];
-
-const phases = [
-  { num: "01", label: "Prototype", desc: "Démonstration des fonctionnalités sur données simulées", current: true },
-  { num: "02", label: "Pilote ciblé", desc: "Déploiement sur 2-3 services avec équipe pilote", current: false },
-  { num: "03", label: "Déploiement élargi", desc: "Ouverture progressive à l'ensemble des services", current: false },
-];
-
 const trustItems = [
   { icon: "🔒", title: "RGPD-ready", desc: "Données hébergées en France, traitement conforme au règlement européen" },
   { icon: "♿", title: "Accessibilité", desc: "Conception inclusive, compatible avec les outils d'assistance" },
@@ -60,23 +57,45 @@ const trustItems = [
 export default function HomePage() {
   return (
     <div className="min-h-screen">
-      {/* Flash Infos Banner */}
-      <section className="bg-emerald-800 border-b border-emerald-700">
-        <div className="max-w-7xl mx-auto px-4 py-2.5">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-              <span className="text-emerald-200 text-xs font-bold uppercase tracking-wider">Flash infos</span>
+      {/* ═══════════════════════════════════════════════════════════════
+          HERO — FLASH INFOS (Full-width green gradient)
+         ═══════════════════════════════════════════════════════════════ */}
+      <section className="gradient-hero text-white relative overflow-hidden">
+        {/* Subtle leaf/city pattern overlay */}
+        <div className="absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '32px 32px' }}></div>
+        <div className="relative z-10">
+          {/* Logo row inside hero */}
+          <div className="max-w-7xl mx-auto px-4 pt-8 pb-4 flex items-center justify-between">
+            <Logo size="lg" variant="light" />
+            <div className="flex items-center gap-3">
+              <span className="hidden sm:inline text-emerald-200 text-sm">Bordeaux Métropole · Gironde</span>
             </div>
-            <div className="overflow-hidden">
-              <div className="flex gap-8 text-sm text-white animate-marquee whitespace-nowrap">
+          </div>
+
+          {/* FLASH INFOS Title */}
+          <div className="max-w-7xl mx-auto px-4 pb-4">
+            <div className="flex items-center gap-3 mb-3">
+              <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">FLASH INFOS</h1>
+              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          {/* Scrolling flash info text */}
+          <div className="max-w-7xl mx-auto px-4 pb-10">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl border border-white/15 p-5">
+              <div className="space-y-3">
                 {flashInfos.map((info, i) => (
-                  <span key={i} className="inline-flex items-center gap-2">
-                    <span>{info.icon}</span>
-                    <span className="text-emerald-300 font-semibold">{info.label}</span>
-                    <span className="text-emerald-50">{info.text}</span>
-                    {i < flashInfos.length - 1 && <span className="text-emerald-600 mx-2">·</span>}
-                  </span>
+                  <div key={i} className="flex items-start gap-3">
+                    <span className="text-lg shrink-0">{info.icon}</span>
+                    <div>
+                      <span className="text-emerald-300 font-semibold text-sm">{info.label} :</span>{' '}
+                      <span className="text-white/90 text-sm">{info.text}</span>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -84,100 +103,215 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Hero — Premium Municipal */}
-      <section className="gradient-hero text-white py-20 px-4 relative overflow-hidden">
-        {/* Subtle pattern overlay */}
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          {/* Municipal Logo Area */}
-          <div className="flex justify-center mb-8">
-            <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-6 py-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-xl">A</span>
-              </div>
-              <div className="text-left">
-                <div className="text-white font-bold text-lg leading-tight">Ambarès-et-Lagrave</div>
-                <div className="text-emerald-300 text-xs font-medium">Bordeaux Métropole · Gironde</div>
+      {/* ═══════════════════════════════════════════════════════════════
+          3-COLUMN CONTENT: Mes démarches | Astuces | AI Assistance
+         ═══════════════════════════════════════════════════════════════ */}
+      <section className="py-10 px-4 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Mes démarches — Form Card */}
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+              <h2 className="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
+                <span className="text-emerald-600">📋</span> Mes démarches
+              </h2>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Choisir le service</label>
+                  <select className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                    <option>État civil</option>
+                    <option>Urbanisme</option>
+                    <option>Scolaire</option>
+                    <option>Voirie</option>
+                    <option>Autre</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Sujet</label>
+                  <input
+                    type="text"
+                    placeholder="Décrivez votre besoin..."
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Précisez la demande/démarche</label>
+                  <textarea
+                    rows={3}
+                    placeholder="Détaillez votre demande..."
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-700 placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <input type="checkbox" id="preanalyse" className="w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500" />
+                  <label htmlFor="preanalyse" className="text-sm text-gray-600">Pré-analyse IA</label>
+                </div>
+                <Link
+                  href="/form"
+                  className="block w-full bg-emerald-600 hover:bg-emerald-700 text-white text-center py-2.5 rounded-lg font-medium text-sm transition-colors"
+                >
+                  Soumettre →
+                </Link>
               </div>
             </div>
-          </div>
 
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight tracking-tight">
-            Votre mairie,<br />
-            <span className="bg-gradient-to-r from-emerald-400 to-green-300 bg-clip-text text-transparent">plus intelligente</span>
-          </h1>
-          <p className="text-lg text-emerald-100/80 mb-10 max-w-2xl mx-auto">
-            Un accès simple et moderne aux démarches, aux projets de la ville et aux services municipaux d&apos;Ambarès-et-Lagrave.
-          </p>
+            {/* Astuces Card */}
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+              <h2 className="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
+                <span className="text-emerald-600">💡</span> Astuces
+              </h2>
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-xs text-gray-500">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  Calendrier déchetterie modifié <span className="text-emerald-600 font-semibold">Avril 2026</span>
+                </div>
+                <div className="border-t border-gray-100 pt-3">
+                  <h3 className="font-semibold text-gray-800 text-sm mb-2">Permanences</h3>
+                  <p className="text-sm text-gray-600">Mairie annexe ouverte le samedi matin. Prenez rendez-vous pour les démarches d&apos;urbanisme et d&apos;état civil.</p>
+                </div>
+                <div className="border-t border-gray-100 pt-3">
+                  <h3 className="font-semibold text-gray-800 text-sm mb-2">Économies d&apos;énergie</h3>
+                  <p className="text-sm text-gray-600">Ateliers gratuits organisés en mairie. Inscription ouverte pour les résidents d&apos;Ambarès.</p>
+                </div>
+                <div className="border-t border-gray-100 pt-3">
+                  <h3 className="font-semibold text-gray-800 text-sm mb-2">Marchés locaux</h3>
+                  <p className="text-sm text-gray-600">Marchés fermiers chaque dimanche matin sur la place de la Libération.</p>
+                </div>
+                <Link href="/projets" className="inline-flex items-center text-emerald-600 text-sm font-semibold hover:text-emerald-700 transition-colors">
+                  Toutes les astuces →
+                </Link>
+              </div>
+            </div>
 
-          <SmartInput />
-
-          <div className="flex flex-wrap justify-center gap-3 mt-8">
-            <Link href="/form" className="bg-emerald-500 hover:bg-emerald-400 text-white px-6 py-3 rounded-xl font-medium transition-all text-sm shadow-lg shadow-emerald-500/25">
-              Mes démarches
-            </Link>
-            <Link href="/suivi" className="border border-white/30 text-white hover:bg-white/10 px-6 py-3 rounded-xl font-medium transition-all text-sm backdrop-blur-sm">
-              Suivre ma demande
-            </Link>
-            <Link href="/chatbot" className="border border-white/30 text-white hover:bg-white/10 px-6 py-3 rounded-xl font-medium transition-all text-sm backdrop-blur-sm">
-              Poser une question
-            </Link>
+            {/* AI Assistance pour les agents */}
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+              <h2 className="text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
+                <span className="text-emerald-600">🤖</span> AI Assistance
+              </h2>
+              <p className="text-sm text-gray-500 mb-5">pour les agents</p>
+              <div className="space-y-4">
+                <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center shrink-0">
+                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-700">L&apos;assistant IA aide les agents à traiter les demandes plus rapidement grâce à la détection automatique des catégories et la pré-analyse.</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="border-t border-gray-100 pt-3">
+                  <p className="text-sm text-gray-600 mb-3">Fonctionnalités principales :</p>
+                  <ul className="space-y-2">
+                    <li className="flex items-center gap-2 text-sm text-gray-600">
+                      <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0"></span>
+                      Classification automatique des demandes
+                    </li>
+                    <li className="flex items-center gap-2 text-sm text-gray-600">
+                      <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0"></span>
+                      Synthèse et résumé intelligent
+                    </li>
+                    <li className="flex items-center gap-2 text-sm text-gray-600">
+                      <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0"></span>
+                      Orientation vers le bon service
+                    </li>
+                  </ul>
+                </div>
+                <Link href="/agent" className="inline-flex items-center text-emerald-600 text-sm font-semibold hover:text-emerald-700 transition-colors">
+                  Accéder à l&apos;espace agent →
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Quick Access Cards — Découvrir / Participer / Démarches / Suivi */}
-      <section className="py-14 px-4 bg-white -mt-8 relative z-20">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { icon: '🔍', title: 'Découvrir', desc: 'Projets, services et vie locale', link: '/projets', color: 'bg-emerald-50 border-emerald-200 hover:border-emerald-400' },
-              { icon: '🤝', title: 'Je participe', desc: 'Consultations et avis citoyens', link: '/chatbot', color: 'bg-teal-50 border-teal-200 hover:border-teal-400' },
-              { icon: '📋', title: 'Mes démarches', desc: 'Formulaires et demandes en ligne', link: '/form', color: 'bg-green-50 border-green-200 hover:border-green-400' },
-              { icon: '📡', title: 'Suivre ma demande', desc: 'Statut et avancement en temps réel', link: '/suivi', color: 'bg-cyan-50 border-cyan-200 hover:border-cyan-400' },
-            ].map((card) => (
-              <Link key={card.title} href={card.link} className={`block p-5 rounded-2xl border-2 ${card.color} transition-all duration-300 hover:-translate-y-1 hover:shadow-md group`}>
-                <div className="text-3xl mb-3">{card.icon}</div>
-                <h3 className="font-bold text-gray-900 mb-1 text-sm">{card.title}</h3>
-                <p className="text-gray-500 text-xs leading-relaxed">{card.desc}</p>
-                <span className="inline-block mt-3 text-emerald-600 text-xs font-semibold group-hover:translate-x-1 transition-transform">Accéder →</span>
+      {/* ═══════════════════════════════════════════════════════════════
+          IMAGE CARDS: Tableau de Bord | Suivi Des Demandes | Gestion Urbaine
+         ═══════════════════════════════════════════════════════════════ */}
+      <section className="py-10 px-4 bg-slate-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {projetsUrbains.map((projet) => (
+              <Link key={projet.title} href={projet.link} className="group block bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm card-hover hover:shadow-lg">
+                <div className="h-48 bg-gray-200 relative overflow-hidden">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={projet.image}
+                    alt={projet.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                </div>
+                <div className="p-5">
+                  <h3 className="font-bold text-gray-900 mb-1">{projet.title}</h3>
+                  <p className="text-gray-500 text-sm">{projet.desc}</p>
+                </div>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Flash Infos Intelligent — Detailed */}
-      <section className="py-14 px-4 bg-slate-50">
+      {/* ═══════════════════════════════════════════════════════════════
+          JOURNEY TIMELINE — Suivi étape par étape
+         ═══════════════════════════════════════════════════════════════ */}
+      <section className="py-10 px-4 bg-white">
         <div className="max-w-5xl mx-auto">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
-              <span className="text-xl">📢</span>
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900">Flash Infos Intelligent</h2>
-              <p className="text-gray-500 text-sm">Alertes et informations en temps réel pour les Ambarésiens</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Suivi de votre demande</h2>
+          <div className="relative">
+            {/* Timeline line */}
+            <div className="absolute top-4 left-0 right-0 h-0.5 bg-gray-200 hidden md:block" style={{ margin: '0 20px' }}></div>
+            <div className="absolute top-4 left-0 h-0.5 bg-emerald-500 hidden md:block" style={{ width: '37.5%', marginLeft: '20px' }}></div>
+            <div className="grid grid-cols-4 md:grid-cols-8 gap-2 md:gap-0 relative z-10">
+              {journeySteps.map((step) => (
+                <div key={step.id} className="flex flex-col items-center text-center">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-2 ${
+                    step.active
+                      ? 'bg-emerald-600 text-white'
+                      : 'bg-gray-200 text-gray-400'
+                  }`}>
+                    {step.active ? (
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                      </svg>
+                    ) : (
+                      <span className="w-2 h-2 bg-gray-400 rounded-full"></span>
+                    )}
+                  </div>
+                  <span className={`text-[10px] md:text-xs font-medium ${step.active ? 'text-emerald-700' : 'text-gray-400'}`}>
+                    {step.label}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {flashInfos.map((info, i) => (
-              <div key={i} className="bg-white rounded-xl border border-gray-100 p-5 flex items-start gap-4 card-hover hover:shadow-md">
-                <div className="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center shrink-0">
-                  <span className="text-xl">{info.icon}</span>
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">{info.label}</span>
-                  </div>
-                  <p className="text-sm text-gray-700 leading-relaxed">{info.text}</p>
-                </div>
-              </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          PROPOSITIONS CITOYENNES — Quick Action Icons
+         ═══════════════════════════════════════════════════════════════ */}
+      <section className="py-10 px-4 bg-slate-50 border-t border-gray-100">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Propositions Citoyennes</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {propositionsCitoyennes.map((item) => (
+              <Link key={item.label} href={item.href} className="flex flex-col items-center bg-white rounded-2xl p-6 border border-gray-100 shadow-sm card-hover hover:shadow-md hover:border-emerald-200 group">
+                <span className="text-3xl mb-3">{item.icon}</span>
+                <span className="text-sm font-semibold text-gray-700 group-hover:text-emerald-700 transition-colors">{item.label}</span>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Découvrir Ambarès */}
+      {/* ═══════════════════════════════════════════════════════════════
+          DÉCOUVRIR AMBARÈS
+         ═══════════════════════════════════════════════════════════════ */}
       <section className="py-14 px-4 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
@@ -203,7 +337,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Je Participe */}
+      {/* ═══════════════════════════════════════════════════════════════
+          JE PARTICIPE
+         ═══════════════════════════════════════════════════════════════ */}
       <section className="py-14 px-4 gradient-section text-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
@@ -232,96 +368,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Mes Démarches */}
-      <section className="py-14 px-4 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">Mes démarches</h2>
-            <p className="text-gray-500">Simplifiez vos demandes grâce à l&apos;intelligence artificielle</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {demarchesItems.map((item) => (
-              <Link key={item.title} href={item.link} className="group bg-slate-50 rounded-2xl p-6 card-hover hover:shadow-md hover:bg-emerald-50 border border-transparent hover:border-emerald-200">
-                <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-emerald-200 transition-colors">
-                  <span className="text-2xl">{item.icon}</span>
-                </div>
-                <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
-                <p className="text-gray-500 text-sm mb-4">{item.desc}</p>
-                <span className="text-emerald-600 text-sm font-semibold group-hover:translate-x-1 inline-block transition-transform">{item.cta} →</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Citizen Journey */}
-      <section className="py-14 px-4 bg-slate-50">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Du besoin citoyen à la vision municipale</h2>
-            <p className="text-gray-500">Un parcours fluide et transparent pour tous les acteurs</p>
-          </div>
-          <div className="relative">
-            <div className="hidden md:block absolute top-8 left-0 right-0 h-0.5 bg-emerald-200 z-0" style={{ margin: '0 40px' }}></div>
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 relative z-10">
-              {journeySteps.map((step) => (
-                <div key={step.num} className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4 shadow-lg">
-                    {step.num}
-                  </div>
-                  <h4 className="font-semibold text-gray-800 text-sm mb-2">{step.title}</h4>
-                  <p className="text-xs text-gray-500">{step.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Service Quality */}
-      <section className="py-14 px-4 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Améliorer la qualité du service public local</h2>
-            <p className="text-gray-500">Des bénéfices concrets pour les citoyens et les agents</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {qualityCards.map((card) => (
-              <div key={card.title} className="flex gap-4 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 card-hover hover:shadow-md hover:border-emerald-200">
-                <span className="text-3xl">{card.icon}</span>
-                <div>
-                  <h3 className="font-bold text-gray-900 mb-1">{card.title}</h3>
-                  <p className="text-gray-500 text-sm">{card.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Progressive Deployment */}
-      <section className="py-14 px-4 bg-gradient-to-r from-emerald-700 to-emerald-900 text-white">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Déploiement progressif possible</h2>
-            <p className="text-emerald-200">Une approche par phases pour une adoption réussie</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {phases.map((phase) => (
-              <div key={phase.num} className={`rounded-2xl p-6 border ${phase.current ? 'bg-white/20 border-white/40' : 'bg-white/10 border-white/20'}`}>
-                <div className="text-4xl font-bold text-emerald-300 mb-2">{phase.num}</div>
-                <h3 className="font-bold text-white mb-2">{phase.label}</h3>
-                <p className="text-emerald-100 text-sm">{phase.desc}</p>
-                {phase.current && (
-                  <span className="mt-3 inline-block bg-white text-emerald-700 text-xs font-medium px-3 py-1 rounded-full">En cours</span>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Trust Layer */}
+      {/* ═══════════════════════════════════════════════════════════════
+          CONFIANCE & TRANSPARENCE
+         ═══════════════════════════════════════════════════════════════ */}
       <section className="py-14 px-4 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
@@ -350,35 +399,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Before/After Identity Tagline */}
-      <section className="py-10 px-4 bg-slate-50 border-t border-gray-100">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="inline-flex items-center gap-3 bg-white rounded-full px-6 py-3 shadow-sm border border-gray-100">
-            <span className="text-emerald-600 font-bold text-sm">✦</span>
-            <p className="text-gray-700 font-medium text-sm">
-              Conserver l&apos;identité locale, moderniser l&apos;expérience.
-            </p>
-            <span className="text-emerald-600 font-bold text-sm">✦</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-12 px-4">
+      {/* ═══════════════════════════════════════════════════════════════
+          FOOTER
+         ═══════════════════════════════════════════════════════════════ */}
+      <footer className="bg-navy text-gray-400 py-12 px-4">
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             {/* Logo & Info */}
             <div>
-              <div className="flex items-center gap-2.5 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl flex items-center justify-center">
-                  <span className="text-white font-bold text-base">A</span>
-                </div>
-                <div>
-                  <div className="text-white font-bold text-sm">Ambarès-et-Lagrave</div>
-                  <div className="text-emerald-400 text-xs">Portail Citoyen Intelligent</div>
-                </div>
+              <div className="mb-4">
+                <Logo size="md" variant="light" />
               </div>
-              <p className="text-sm text-gray-500">Prototype de démonstration — Plateforme municipale intelligente au service des Ambarésiens.</p>
+              <p className="text-sm text-gray-500">Portail Citoyen Intelligent — Plateforme municipale au service des Ambarésiens.</p>
             </div>
 
             {/* Quick Links */}
@@ -404,7 +436,7 @@ export default function HomePage() {
           </div>
 
           <div className="border-t border-gray-800 pt-6 text-center">
-            <p className="text-xs text-gray-600">© 2026 Ambarès-et-Lagrave — Portail Citoyen Intelligent · Prototype · Données simulées · RGPD en cours de conformité</p>
+            <p className="text-xs text-gray-600">© 2026 Ambarès-et-Lagrave — Portail Citoyen Intelligent · Données simulées · RGPD en cours de conformité</p>
           </div>
         </div>
       </footer>
