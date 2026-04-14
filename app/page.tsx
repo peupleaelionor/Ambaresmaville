@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import Logo from '@/components/Logo';
 
 const flashInfos = [
@@ -238,11 +239,12 @@ export default function HomePage() {
             {projetsUrbains.map((projet) => (
               <Link key={projet.title} href={projet.link} className="group block bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm card-hover hover:shadow-lg">
                 <div className="h-48 bg-gray-200 relative overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={projet.image}
                     alt={projet.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                 </div>

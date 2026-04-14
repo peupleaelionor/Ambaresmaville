@@ -21,7 +21,7 @@ export default function Logo({ size = 'md', variant = 'light' }: { size?: 'sm' |
       </div>
       <div>
         <div className={`${titleColor} font-bold ${textSize} leading-tight`}>AMBARÈS</div>
-        <div className={`${subColor} font-semibold ${subSize} leading-tight`}>&amp; LAGRAVE</div>
+        <div className={`${subColor} font-semibold ${subSize} leading-tight`}>& LAGRAVE</div>
       </div>
     </div>
   );
